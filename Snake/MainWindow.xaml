@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Snake"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="800">
+        Title="MainWindow" Height="800" Width="800"
+        KeyDown="Window_KeyDown">
     <Grid>
         <Canvas x:Name="canvas" Width="600" Height="600" Loaded="canvas_Loaded"></Canvas>
     </Grid>

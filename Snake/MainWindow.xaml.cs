@@ -22,11 +22,20 @@ namespace Snake
     {
         Image[,] palya = new Image[20, 20];
         int[,] racs = new int[20, 20];
+        public List<Position> SnakeBody = new List<Position>();
 
         public MainWindow()
         {
             InitializeComponent();
             Init();
+            
+        }
+        private void InitSnake() {
+            for (int i = 0; i < 10; i++)
+            {
+                SnakeBody.Add(new Position(9, i));               
+            }
+            DrawSnake();
         }
         private void Init() {
             for (int i = 0; i < 20; i++)
@@ -41,9 +50,31 @@ namespace Snake
                     palya[i, j] = img;
                     canvas.Children.Add(palya[i, j]);
                 }
+            Position gyumi = new Position();
+            racs[gyumi.X, gyumi.Y] = 2;
+            InitSnake();
             Draw();
         }
-        private void Draw() {
+        private void DrawSnake() {
+
+            foreach (var item in SnakeBody)
+            {
+                racs[item.X, item.Y] = 1;
+            }
+        }
+
+        private void stepDown() {
+            Position head = SnakeBody[SnakeBody.Count - 1];
+            Position newHead = new Position(head.X, head.Y+1);
+            SnakeBody.Add(newHead);
+            racs[SnakeBody[0].X, SnakeBody[0].Y] = 0;
+            racs[newHead.X, newHead.Y] = 1;
+            SnakeBody.Remove(SnakeBody[0]);
+            Draw();
+
+        }
+
+         private void Draw() {
             for (int i = 0; i < 20; i++)
                 for (int j = 0; j < 20; j++)
                 {
@@ -60,6 +91,17 @@ namespace Snake
         private void canvas_Loaded(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Down:
+                    stepDown();
+                    break;
+
+            }
         }
     }
 }
